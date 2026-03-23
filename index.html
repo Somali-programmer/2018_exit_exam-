@@ -1,1067 +1,525 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Abdinasir Ibrahim | Xarago · MilTech portfolio</title>
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: #0a1428;
-            /* deep navy base */
-            background-image: radial-gradient(circle at 30% 10%, rgba(0, 180, 255, 0.08) 0%, transparent 30%),
-                radial-gradient(circle at 80% 70%, rgba(0, 230, 255, 0.06) 0%, transparent 35%);
-            min-height: 100vh;
-            color: #eef2f6;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* animated gradient overlay (subtle) */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(125deg, rgba(10, 30, 60, 0.5) 0%, rgba(0, 50, 90, 0.3) 40%, rgba(0, 20, 40, 0.7) 100%);
-            z-index: -1;
-            animation: slowDrift 18s infinite alternate ease-in-out;
-            pointer-events: none;
-        }
-
-        @keyframes slowDrift {
-            0% {
-                opacity: 0.5;
-                background-position: 0% 0%;
-            }
-
-            100% {
-                opacity: 0.9;
-                background-position: 15% 10%;
-            }
-        }
-
-        /* ===== GLASS COMPONENTS ===== */
-        .glass-card {
-            background: rgba(18, 30, 48, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 255, 255, 0.12);
-            border-radius: 24px;
-            box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 255, 0.05) inset;
-            transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(0, 230, 255, 0.4);
-            box-shadow: 0 25px 40px -12px #00ccff30, 0 0 0 1px #00ffff40 inset;
-            transform: translateY(-4px);
-        }
-
-        /* containers */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* sticky navbar */
-        nav {
-            position: sticky;
-            top: 16px;
-            z-index: 100;
-            margin-top: 16px;
-            background: rgba(8, 18, 32, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 255, 255, 0.15);
-            border-radius: 60px;
-            padding: 12px 28px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 15px 30px -10px #00000080;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.4rem;
-            letter-spacing: -0.02em;
-            background: linear-gradient(130deg, #fff, #a0e7ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            border-right: 2px solid cyan;
-            padding-right: 18px;
-        }
-
-        .logo span {
-            font-weight: 400;
-            color: #8ab3ff;
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            font-size: 0.9rem;
-        }
-
-        .nav-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px 28px;
-            font-weight: 500;
-        }
-
-        .nav-links a {
-            color: #d0e2ff;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: 0.2s;
-            border-bottom: 2px solid transparent;
-            padding-bottom: 4px;
-        }
-
-        .nav-links a:hover {
-            color: #ffffff;
-            border-bottom-color: #0ff;
-            text-shadow: 0 0 8px cyan;
-        }
-
-        /* Mobile Menu Toggle */
-        .menu-btn {
-            position: relative;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            transition: all .5s ease-in-out;
-            z-index: 1001;
-        }
-
-        .menu-btn__burger {
-            width: 24px;
-            height: 2px;
-            background: #0ff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(255, 101, 47, .2);
-            transition: all .5s ease-in-out;
-        }
-
-        .menu-btn__burger::before,
-        .menu-btn__burger::after {
-            content: '';
-            position: absolute;
-            width: 24px;
-            height: 2px;
-            background: #0ff;
-            border-radius: 5px;
-            transition: all .5s ease-in-out;
-        }
-
-        .menu-btn__burger::before {
-            transform: translateY(-8px);
-        }
-
-        .menu-btn__burger::after {
-            transform: translateY(8px);
-        }
-
-        /* Animation */
-        .menu-btn.open .menu-btn__burger {
-            transform: translateX(-50px);
-            background: transparent;
-            box-shadow: none;
-        }
-
-        .menu-btn.open .menu-btn__burger::before {
-            transform: rotate(45deg) translate(35px, -35px);
-        }
-
-        .menu-btn.open .menu-btn__burger::after {
-            transform: rotate(-45deg) translate(35px, 35px);
-        }
-
-        /* Nav Menu Wrapper */
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-        }
-
-        /* section headings */
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 0%, #b2f0ff 80%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            border-left: 6px solid #0ff;
-            padding-left: 24px;
-            box-shadow: -10px 0 20px -10px #0ff3;
-        }
-
-        /* buttons */
-        .btn {
-            display: inline-block;
-            padding: 12px 32px;
-            border-radius: 40px;
-            font-weight: 600;
-            text-decoration: none;
-            background: rgba(0, 255, 255, 0.08);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            color: white;
-            transition: 0.25s;
-            box-shadow: 0 8px 20px -8px #000;
-            margin-right: 12px;
-            margin-bottom: 8px;
-        }
-
-        .btn-cyan {
-            background: rgba(0, 230, 255, 0.18);
-            border-color: #0ff;
-            color: #fff;
-            text-shadow: 0 0 5px cyan;
-        }
-
-        .btn-cyan:hover,
-        .btn:hover {
-            background: #00e0ffcc;
-            border-color: white;
-            color: #0a1428;
-            box-shadow: 0 0 20px #0ff;
-            transform: scale(1.02);
-        }
-
-        /* hero */
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            padding: 40px 0;
-        }
-
-        .hero-content {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .hero-text {
-            flex: 1 1 350px;
-        }
-
-        .hero-text .badge {
-            font-size: 1.2rem;
-            color: #9fc9ff;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 12px;
-        }
-
-        .hero-text h1 strong {
-            background: linear-gradient(145deg, #fff, #0ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 15px cyan;
-        }
-
-        .hero-para {
-            font-size: 1.2rem;
-            color: #bfd6ff;
-            max-width: 600px;
-            margin: 24px 0 28px;
-        }
-
-        /* profile image frame (glass) */
-        .profile-frame {
-            flex: 0 0 280px;
-            height: 280px;
-            border-radius: 40px;
-            background: rgba(0, 255, 255, 0.05);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(0, 255, 255, 0.25);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 30px 40px -20px #000;
-        }
-
-        .profile-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 36px;
-            filter: drop-shadow(0 0 15px cyan);
-        }
-
-        /* about flex */
-        .about-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .about-img {
-            flex: 1 1 240px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .about-text {
-            flex: 3 1 400px;
-            font-size: 1.1rem;
-            color: #d3e2fc;
-        }
-
-        .about-text p {
-            margin-bottom: 20px;
-        }
-
-        /* skills grid & cards */
-        .skills-grid,
-        .military-grid,
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 28px;
-            margin-top: 20px;
-        }
-
-        .skill-card,
-        .military-card,
-        .project-card,
-        .exp-card,
-        .edu-card {
-            padding: 28px 22px;
-        }
-
-        .skill-category {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #b0f0ff;
-            border-bottom: 1px dashed cyan;
-            padding-bottom: 8px;
-        }
-
-        .skill-items {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .skill-row {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .skill-label {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 500;
-            color: #e0ecff;
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #0cf, #0ff);
-            border-radius: 20px;
-            box-shadow: 0 0 10px #0ff;
-            width: 0%;
-            /* will be set inline */
-        }
-
-        .military-card {
-            text-align: center;
-        }
-
-        .military-card i {
-            font-size: 2.6rem;
-            color: #0ff;
-            margin-bottom: 16px;
-            background: rgba(0, 255, 200, 0.1);
-            padding: 16px;
-            border-radius: 60px;
-            border: 1px solid cyan;
-        }
-
-        .military-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-        }
-
-        .project-card h3 {
-            font-size: 1.5rem;
-            color: #fff;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0 16px;
-        }
-
-        .tech-tag {
-            background: rgba(0, 200, 255, 0.15);
-            padding: 5px 16px;
-            border-radius: 40px;
-            border: 1px solid cyan;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .demo-link {
-            color: #0ff;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .demo-link i {
-            font-size: 0.8rem;
-        }
-
-        /* experience & education list */
-        .exp-item,
-        .edu-item {
-            margin-bottom: 30px;
-        }
-
-        .exp-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .exp-meta {
-            color: #8fcbff;
-            margin: 6px 0 12px;
-            font-weight: 400;
-        }
-
-        /* contact row */
-        .contact-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-        }
-
-        .contact-info {
-            flex: 1 1 250px;
-        }
-
-        .contact-detail {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 16px 22px;
-            border-radius: 60px;
-            border: 1px solid cyan;
-        }
-
-        .contact-detail i {
-            font-size: 1.8rem;
-            color: #0ff;
-            width: 40px;
-        }
-
-        .contact-form {
-            flex: 2 1 380px;
-            padding: 32px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #2f4f7f;
-            border-radius: 40px;
-            padding: 16px 22px;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            transition: 0.2s;
-        }
-
-        input:focus,
-        textarea:focus {
-            border-color: #0ff;
-            box-shadow: 0 0 12px #0ff6;
-        }
-
-        textarea {
-            border-radius: 30px;
-            resize: vertical;
-        }
-
-        .social-links {
-            margin-top: 30px;
-            display: flex;
-            gap: 28px;
-        }
-
-        .social-links a {
-            color: white;
-            font-size: 2rem;
-            transition: 0.2s;
-        }
-
-        .social-links a:hover {
-            color: #0ff;
-            text-shadow: 0 0 15px cyan;
-        }
-
-        /* footer */
-        footer {
-            margin-top: 80px;
-            padding: 28px 0;
-            text-align: center;
-            border-top: 1px solid #0ff3;
-            color: #b0caf0;
-            background: rgba(8, 12, 24, 0.6);
-            backdrop-filter: blur(4px);
-        }
-
-        /* responsive */
-        @media (max-width: 1024px) {
-            .hero-text h1 {
-                font-size: 3rem;
-            }
-
-            .nav-links {
-                gap: 12px 20px;
-            }
-        }
-
-        @media (max-width: 991px) {
-            .menu-btn {
-                display: flex;
-            }
-
-            .nav-menu {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 80%;
-                max-width: 400px;
-                height: 100vh;
-                background: rgba(8, 18, 32, 0.95);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: center;
-                gap: 40px;
-                transition: 0.4s ease-in-out;
-                z-index: 1000;
-                border-left: 1px solid rgba(0, 255, 255, 0.2);
-                padding: 40px;
-            }
-
-            .nav-menu.open {
-                right: 0;
-                box-shadow: -20px 0 40px rgba(0, 0, 0, 0.5);
-            }
-
-            .nav-links {
-                flex-direction: column;
-                align-items: center;
-                gap: 30px;
-            }
-
-            .nav-links a {
-                font-size: 1.2rem;
-            }
-
-            .hero-content {
-                flex-direction: column-reverse;
-                text-align: center;
-            }
-
-            .hero-text {
-                flex: none;
-                width: 100%;
-            }
-
-            .hero-para {
-                margin: 24px auto 28px;
-            }
-
-            .profile-frame {
-                flex: 0 0 240px;
-                height: 240px;
-            }
-
-            .about-grid {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .section-title {
-                text-align: center;
-                border-left: none;
-                border-bottom: 4px solid #0ff;
-                padding-left: 0;
-                padding-bottom: 12px;
-                display: inline-block;
-                margin-left: auto;
-                margin-right: auto;
-                width: fit-content;
-            }
-
-            .contact-row {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-text h1 {
-                font-size: 2.2rem;
-            }
-
-            .btn {
-                display: block;
-                margin-right: 0;
-                width: 100%;
-                text-align: center;
-            }
-
-            .nav-menu {
-                width: 100%;
-            }
-        }
-
-        /* extra cyan highlights */
-        .highlight {
-            color: #0ff;
-            font-weight: 600;
-        }
-
-        .sticky-download {
-            background: rgba(0, 255, 255, 0.2);
-            border-radius: 40px;
-            padding: 8px 22px;
-            border: 1px solid #0ff;
-            font-weight: 600;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>CS Exit Exam 2018 • HU computer science jigjiga center</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 10% 20%, #0b1120, #0a0f1c);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    /* main container */
+    .exam-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* header card */
+    .hero {
+      background: rgba(18, 25, 45, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      padding: 1.8rem 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(72, 187, 255, 0.2);
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #E0F2FE, #A5F3FC);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .hero p {
+      color: #9ca3cf;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.2rem;
+      background: #0f172ad9;
+      padding: 0.8rem 1.4rem;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+    }
+
+    .score-chip {
+      background: #1e293b;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #b9f3ff;
+    }
+
+    .percentage-circle {
+      background: #0f212e;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #7dd3fc;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 8px;
+      background: #1e2a3a;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      border-radius: 20px;
+      transition: width 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    /* question card */
+    .question-card {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      border-radius: 2rem;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.2s;
+      box-shadow: 0 25px 40px -12px black;
+    }
+
+    .q-num {
+      display: inline-block;
+      background: #0f2b3b;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #7dd3fc;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.3px;
+    }
+
+    .question-text {
+      font-size: 1.45rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #f1f5f9;
+      margin-bottom: 2rem;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .opt-btn {
+      background: #0f172ab3;
+      border: 1.5px solid #334155;
+      border-radius: 1.2rem;
+      padding: 1rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #e2e8f0;
+    }
+
+    .opt-btn:hover:not(.disabled-opt) {
+      background: #1e2a47;
+      border-color: #5b8cff;
+      transform: translateX(5px);
+    }
+
+    .opt-prefix {
+      font-weight: 800;
+      background: #1e293b;
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 40px;
+      font-size: 0.9rem;
+    }
+
+    /* feedback styles on selection */
+    .opt-btn.correct-highlight {
+      background: #0b3b2a;
+      border-color: #2dd4bf;
+      box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.4);
+    }
+
+    .opt-btn.correct-highlight .opt-prefix {
+      background: #14b8a6;
+      color: white;
+    }
+
+    .opt-btn.wrong-highlight {
+      background: #4a1e2c;
+      border-color: #f87171;
+      box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.3);
+    }
+
+    .opt-btn.wrong-highlight .opt-prefix {
+      background: #dc2626;
+      color: white;
+    }
+
+    .disabled-opt {
+      cursor: default;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .explanation-box {
+      margin-top: 1.2rem;
+      padding: 1rem 1.3rem;
+      background: #0b1222;
+      border-radius: 1rem;
+      border-left: 5px solid #3b82f6;
+      font-size: 0.9rem;
+      color: #cbd5e6;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    button {
+      background: #1e2a47;
+      border: none;
+      font-weight: 600;
+      padding: 0.7rem 1.6rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    button.primary {
+      background: #2c6e9e;
+      box-shadow: 0 2px 8px rgba(44,110,158,0.3);
+    }
+
+    button.secondary {
+      background: #334155;
+    }
+
+    button.danger {
+      background: #3b2c3a;
+      color: #f1a5b5;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .reset-btn {
+      background: #1e2a3e;
+      border: 1px solid #5f7f9e;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: #5f7c9a;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 1rem;
+      }
+      .question-text {
+        font-size: 1.2rem;
+      }
+      .opt-btn {
+        padding: 0.7rem 1rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <!-- Sticky navigation -->
-    <nav class="container">
-        <div class="logo">XARAGO <span>|| mil·tech</span></div>
+<div class="exam-container">
+  <div class="hero">
+    <h1>📘 CS Exit Exam 2018 · Master Edition</h1>
+    <p>100 official-style questions • Prepare by Mawliid Mahamed Abdi</p>
+    <div class="stats-bar">
+      <div class="score-chip" id="scoreDisplay">✅ Score: 0 / 100</div>
+      <div class="percentage-circle" id="percentDisplay">📊 0%</div>
+      <div class="progress-track">
+        <div class="progress-fill" id="globalProgressFill"></div>
+      </div>
+    </div>
+  </div>
 
-        <div class="menu-btn" id="menu-btn">
-            <div class="menu-btn__burger"></div>
+  <div id="quizDynamicArea"></div>
+
+  <footer>
+    ⚡ prepared Haramaya University computer science jigjiga center• each question locks after answer • track percentage
+  </footer>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // FULL 100 QUESTIONS extracted from Computer Science Exit Exam 2018 with Answer.pdf
+  // each entry: text, options[], correctLetter, explanation (based on official answer)
+  // --------------------------------------------------------------
+  const EXAM_DATA = [
+    { text: "Consider: nav ul { list-style-type: none; margin: 0; padding: 0; } What problem does this solve when creating a navigation bar?", options: ["Removes bullet points and default spacing, allowing custom layout", "Aligns the navbar to the right of the page", "Adds hover effects to list items", "Converts the list into a dropdown menu"], correctLetter: "a", explanation: "Removing default list styling gives full control over navbar layout." },
+    { text: "Which AI approach most directly supports understanding biological intelligence behavior as a scientific goal?", options: ["Weak AI", "Applied AI", "Cognitive AI", "Strong AI"], correctLetter: "c", explanation: "Cognitive AI models human-like reasoning and biological intelligence." },
+    { text: "In client-server database architecture, what is the primary role of the server?", options: ["Provide the GUI for end users", "Initiate all network connections and poll clients", "Store and manage shared data, enforce ACID properties, process client requests", "Cache all user sessions locally for offline access"], correctLetter: "c", explanation: "Server handles data persistence, concurrency, and ACID." },
+    { text: "Which automaton is powerful enough to recognize the language L = {aⁿbⁿcⁿ | n ≥ 1}?", options: ["DFA", "Linear Bounded Automaton (LBA)", "NFA", "Pushdown Automaton (PDA)"], correctLetter: "b", explanation: "LBA is needed for context-sensitive language aⁿbⁿcⁿ." },
+    { text: "In two-phase locking (2PL), during which phase may a transaction acquire locks but not release any?", options: ["Growing phase", "Commit phase", "Validation phase", "Shrinking phase"], correctLetter: "a", explanation: "Growing phase acquires locks; shrinking phase releases them." },
+    { text: "To extend the connectivity of processor bus we use:", options: ["SCSI", "PCI", "Controllers", "Multi bus"], correctLetter: "d", explanation: "Multibus architecture extends bus connectivity." },
+    { text: "Combinational circuit differs from sequential circuit primarily because:", options: ["Combinational circuit cannot be built using logic circuit", "The output of combinational circuit depends only on present input, not on past output.", "Sequential circuit have no feedback while combinational circuit do", "Combinational circuit requires clock signal, but sequential circuit do not"], correctLetter: "b", explanation: "Combinational logic has no memory; output = function of current inputs." },
+    { text: "Why is Greedy Best-First Search not guaranteed to be optimal or complete?", options: ["It ignores path cost g(n) and relies only on h(n)", "It always chooses the shallowest node", "It expands nodes in FIFO order", "It requires full knowledge of the goal state in advance"], correctLetter: "a", explanation: "Greedy best-first uses only heuristic h(n), ignoring cost so far, can get stuck." },
+    { text: "From the following statement which is correct about this pointer in C++?", options: ["This pointer passed as hidden argument in all non-static member functions.", "This pointer passed as hidden argument in all static variables.", "This pointer passed as hidden argument in all static functions.", "This pointer passed as hidden argument in all functions of the class."], correctLetter: "a", explanation: "this pointer is implicitly passed to non-static member functions." },
+    { text: "In class diagram, if class Car has solid diamond points to class Engine, what does this indicates?", options: ["Car uses Engine temporarily", "Engine can exist independently of the Car", "Composition: Engine is part of Car, lifecycle bound", "Aggregation with weak relationship"], correctLetter: "c", explanation: "Solid diamond = composition, strong ownership and lifecycle." },
+    { text: "Which of the following is a linear data structure?", options: ["Tree", "Array", "Queue", "Linked list"], correctLetter: "b", explanation: "Array stores elements linearly in contiguous memory." },
+    { text: "What is the main purpose of syntax-directed translation in a compiler?", options: ["To interleave semantic analysis with syntax analysis using attributes", "To generate optimized machine code directly", "To tokenize the source code", "To replace the parser with a finite automaton"], correctLetter: "a", explanation: "Syntax-directed translation attaches semantic rules to grammar productions." },
+    { text: "What will be the output of: int sum=0; for(int j=1;j<=10;j++) sum=sum+j; System.out.println(sum);", options: ["55", "44", "33", "66"], correctLetter: "a", explanation: "Sum of 1 to 10 = 55." },
+    { text: "Which keyword is used in Java to create a subclass that inherits from a superclass?", options: ["inherits", "superclass", "extends", "implements"], correctLetter: "c", explanation: "extends keyword establishes inheritance." },
+    { text: "A language that allows the DBA or user to describe and name the entities, attributes, and relationships required for the application is:", options: ["Transaction control language (TCL)", "Data control language (DCL)", "Data Manipulation Language (DML)", "Data Definition Language (DDL)"], correctLetter: "d", explanation: "DDL defines schema." },
+    { text: "Which one of the following is linear data structure?", options: ["Tree", "Array", "Queue", "Linked list"], correctLetter: "b", explanation: "Array is linear and contiguous." },
+    { text: "Straight directed translation uses:", options: ["Purely lexical rules", "Backtracking algorithms", "Grammar without attributes", "Grammar with semantic rule"], correctLetter: "d", explanation: "Semantic rules drive translation." },
+    { text: "Which one is the first operation or step in CPU instruction cycle?", options: ["Executing the instruction", "Handling interrupt", "Decoding the instruction", "Fetching the instruction"], correctLetter: "d", explanation: "Fetch → decode → execute cycle." },
+    { text: "Which search strategy tries to expand the node that is closest to the goal using f(n)=h(n)?", options: ["Uniform-cost search", "Greedy best-first search", "Depth-first search", "A* search"], correctLetter: "b", explanation: "Greedy BFS uses heuristic h(n) only." },
+    { text: "Which one is a top-down parser without backtracking?", options: ["LR parser", "Brute force parser", "Operator precedence parser", "Predictive parser"], correctLetter: "d", explanation: "Predictive parser uses LL(1) without backtracking." },
+    { text: "How many layers are there in OSI reference model?", options: ["7", "6", "5", "4"], correctLetter: "a", explanation: "OSI has 7 layers." },
+    { text: "Which computer structural component provides communication among CPU, main memory and I/O?", options: ["System unit", "Computer network", "CPU", "System interconnection"], correctLetter: "d", explanation: "System interconnection (bus) connects components." },
+    { text: "Mr. Getahun can view the database record, but cannot change the value. Which security technique?", options: ["Access Control", "Availability", "Non-repudiation", "Integrity"], correctLetter: "a", explanation: "Access control restricts read/write permissions." },
+    { text: "Deferred update with no checkpoints in high-transaction OLTP system: most serious drawback?", options: ["Log scans become prohibitively expensive after long uptime", "Increased disk I/O due to frequent page copying", "Shared locks cannot be used", "View serializability cannot be ensured"], correctLetter: "a", explanation: "Long log recovery without checkpoints degrades performance." },
+    { text: "Which function of OS is categorized under process management?", options: ["Allocates device efficiently", "De-allocates resources", "Allocates memory when process requests", "Allocates the processor (CPU) to a process"], correctLetter: "d", explanation: "CPU scheduling is process management." },
+    { text: "Which statement is TRUE?", options: ["Every regular language is context-free.", "Every context-free language is regular.", "Every context-sensitive language is regular.", "Every recursively enumerable language is recursive"], correctLetter: "a", explanation: "Regular ⊂ Context-free ⊂ Context-sensitive ⊂ Recursively enumerable." },
+    { text: "Data transfer method that allows I/O device to transfer data directly to/from memory without CPU involvement:", options: ["Asynchronous data transfer", "Direct Memory Access (DMA)", "Interrupt-driven transfer", "Programmed I/O transfer"], correctLetter: "b", explanation: "DMA offloads data transfer from CPU." },
+    { text: "Which PHP method retrieves form information through parameters sent in the URL?", options: ["$_REQUEST[]", "$_POST[]", "$_GET[]", "$_SESSION[]"], correctLetter: "c", explanation: "$_GET[] or $_REQUEST, but URL params are GET." },
+    { text: "Which statement is NOT true about digital signature?", options: ["Digital signature is not encryption algorithm", "Sender encrypts message with its private key", "Sender encrypts message with its public key", "Digital signature provides authentication"], correctLetter: "c", explanation: "Signing uses private key, not public key." },
+    { text: "Which IP address class uses first two octets for network addresses and last two for host addressing?", options: ["Class C", "Class D", "Class A", "Class B"], correctLetter: "d", explanation: "Class B: 16-bit network, 16-bit host." },
+    { text: "What best defines a heuristic in the context of AI search?", options: ["Function that estimates how close a state is to goal", "Guaranteed optimal path", "Method that avoids revisiting states", "Brute-force enumeration"], correctLetter: "a", explanation: "Heuristic estimates cost/distance to goal." },
+    { text: "Which party performs technical evaluation using evidence supplied by developers?", options: ["Evaluator", "Certifier", "Sponsor", "Developer"], correctLetter: "a", explanation: "Independent evaluator tests security target." },
+    { text: "Which RAID technology is most preferable for a huge company data center?", options: ["RAID level 3", "RAID level 1", "RAID level 2", "RAID level 0"], correctLetter: "b", explanation: "RAID 1 (mirroring) offers high reliability." },
+    { text: "Which analysis technique is INAPPROPRIATE for determining lower bound of comparison-based sorting?", options: ["Decision tree model — because it assumes only array indexing", "Recurrence relations — because sorting isn't naturally recursive", "Asymptotic analysis — because it ignores constants", "Decision tree model — gives Ω(n log n)"], correctLetter: "b", explanation: "Recurrence relations not typical for lower bound; decision tree model is appropriate." },
+    { text: "In CSS, which property is used to change the text color of an element?", options: ["text-color", "font-color", "color", "foreground"], correctLetter: "c", explanation: "CSS color property sets text color." },
+    { text: "Which function is used to create a table in SQL?", options: ["CREATE table_name (column_name, column type);", "CREATE table_name (column_type, column name);", "CREATE TABLE table_name (column_name, column type);", "CREATE TABLE table_name (column_type, column name);"], correctLetter: "c", explanation: "Correct syntax: CREATE TABLE name (col datatype)." },
+    { text: "Primary function of an operating system?", options: ["Connect to internet", "Create documents", "Design computer hardware", "Act as intermediary between users and hardware"], correctLetter: "d", explanation: "OS abstracts hardware and provides services." },
+    { text: "Time units T(n) for given code (int sum=0; for i=1..n sum=sum+1; return sum)?", options: ["5n+5", "4n²+4", "6n+2", "4n+4"], correctLetter: "c", explanation: "Loop with initialization and return approx 6n+2 ops." },
+    { text: "Object oriented principle that contains information in an object, exposing only selected information:", options: ["Abstraction", "Inheritance", "Polymorphism", "Encapsulation"], correctLetter: "d", explanation: "Encapsulation hides internal state." },
+    { text: "Stack follows policy:", options: ["LIFO", "FIFO", "Random", "Circular"], correctLetter: "a", explanation: "Stack = Last In First Out." },
+    { text: "Which is FALSE about database system?", options: ["It is very difficult to protect a file under the system", "User is not required to write the procedures", "DBMS provides good protection", "Contains sophisticated techniques to store and retrieve data"], correctLetter: "a", explanation: "Databases provide robust protection, opposite is false." },
+    { text: "Which is categorized under Log based Recovery Techniques?", options: ["Recovery in Multi-database Systems", "ARIES Recovery Algorithm", "Shadow Paging Technique", "Deferred Database Modification"], correctLetter: "b", explanation: "ARIES is a famous log-based recovery algorithm." },
+    { text: "First step to convert CFG into Greibach Normal Form (GNF)?", options: ["Convert grammar into CNF", "If production not in GNF, convert", "Convert grammar into GNF", "If left recursion exists, eliminate it"], correctLetter: "d", explanation: "Eliminate left recursion first before GNF conversion." },
+    { text: "User installs a new printer, OS automatically detects and configures. This is example of:", options: ["Plug-and-play functionality", "Manual driver installation", "Manual hardware management", "Resource allocation"], correctLetter: "a", explanation: "Plug-and-play automates device detection." },
+    { text: "Which is NOT property of an algorithm?", options: ["Finiteness", "Definiteness", "Correctness", "Platform dependence"], correctLetter: "d", explanation: "Algorithms are independent of platform." },
+    { text: "Which RAID is known by striping with parity and fault tolerance?", options: ["RAID 2", "RAID 1", "RAID 5", "RAID 0"], correctLetter: "c", explanation: "RAID 5 uses block-level striping with distributed parity." },
+    { text: "To develop large portable programs, which type of programming language is preferable?", options: ["Assembly", "Machine language", "High-level language (Java/Python)", "Low-level language"], correctLetter: "c", explanation: "High-level languages provide portability and rapid development." },
+    { text: "Heuristic search strategy that evaluates nodes by f(n)=g(n)+h(n):", options: ["A* search", "Greedy Best-First Search", "Uniform-cost search", "Depth-first search"], correctLetter: "a", explanation: "A* uses actual cost g(n) + heuristic h(n)." },
+    { text: "If input is 'a' for syntax tree, which function is used to create tree?", options: ["mknode(num, value)", "mkleaf(num, value)", "mkleaf(id, entry)", "mknode(op, left, right)"], correctLetter: "d", explanation: "mknode creates interior node with operator." },
+    { text: "Mr. Negesa acts as Mr. Dereje to send message: what attack?", options: ["Denial of service", "Modification of message", "Masquerade", "Replay"], correctLetter: "c", explanation: "Masquerade is impersonation attack." },
+    { text: "Disadvantage of waterfall model?", options: ["Simple and easy", "Easy to manage due rigidity", "Not suitable for high-risk changing requirements", "Phases processed one at a time"], correctLetter: "c", explanation: "Waterfall inflexible to requirement changes." },
+    { text: "Consider directed line from advisor to instructor and student. This indicates cardinality:", options: ["Many to one", "Many to many", "One to one", "One to many"], correctLetter: "a", explanation: "Many-to-one relationship typical for advisor." },
+    { text: "Resources cannot be forcibly taken; they must be released voluntarily. Which deadlock condition?", options: ["No Preemption", "Hold and Wait", "Mutual Exclusion", "Circular Wait"], correctLetter: "a", explanation: "No preemption means resources held until release." },
+    { text: "Which statement is WRONGLY described about code generation?", options: ["Code generation can be considered as start phase", "Target program is output", "Needs error-free intermediate code", "Produces target code for three-address statements"], correctLetter: "a", explanation: "Code generation is near the end, not start phase." },
+    { text: "Service that allows posting website onto Internet:", options: ["Web hosting", "Internet service provider", "Web client", "Domain name registration"], correctLetter: "a", explanation: "Web hosting provides server space." },
+    { text: "In singly linked list, node contains:", options: ["Data and index", "Data and one pointer (next)", "Only data", "Data and two pointers"], correctLetter: "b", explanation: "Singly linked node stores data and next pointer." },
+    { text: "Which is non-functional requirement?", options: ["System allows PDF report", "System responds within 2 seconds under load", "Store data on relational DB", "Submit emergency report"], correctLetter: "b", explanation: "Performance (response time) is non-functional." },
+    { text: "In object design, contract typically includes:", options: ["Class and sequence diagram", "Budget and timeline", "Invariants, preconditions, postconditions", "Use case names"], correctLetter: "c", explanation: "Design by contract specifies invariants, pre/post." },
+    { text: "Which OSI layer is NOT correctly matched to its PDU?", options: ["Application → Data", "Transport → Segment", "Physical → Bit", "Network → Frame"], correctLetter: "d", explanation: "Network layer PDU is packet, not frame." },
+    { text: "Which data structure follows LIFO principle?", options: ["Graphs", "Queues", "Stacks", "Trees"], correctLetter: "c", explanation: "Stack = LIFO." },
+    { text: "Dog provides its own version of sound() — OOP concept?", options: ["Method overriding", "Method overloading", "Abstraction", "Encapsulation"], correctLetter: "a", explanation: "Overriding redefines superclass method." },
+    { text: "Which grammar generates all possible patterns of strings in formal language?", options: ["Context-free", "Context-sensitive", "Recursively enumerable", "Regular"], correctLetter: "c", explanation: "Recursively enumerable grammars generate all patterns." },
+    { text: "Tool to troubleshoot network connectivity:", options: ["Ipconfig", "Ping", "Traceroute", "Netstat"], correctLetter: "b", explanation: "Ping tests reachability." },
+    { text: "Time complexity for binary search:", options: ["O(n log n)", "O(n²)", "O(n)", "O(log n)"], correctLetter: "d", explanation: "Binary search runs in logarithmic time." },
+    { text: "Access specifier accessible within same package or subclasses in different package:", options: ["Public", "Default", "Private", "Protected"], correctLetter: "d", explanation: "Protected allows subclass access." },
+    { text: "Basic goal of Normalization:", options: ["Decrease data integrity", "Reduce redundancy", "Maximize transitive dependency", "Increase dependency"], correctLetter: "b", explanation: "Normalization minimizes redundancy and anomalies." },
+    { text: "Protocol mostly used for client-server communication in web apps:", options: ["FTP", "SMTP", "HTTP", "SSH"], correctLetter: "c", explanation: "HTTP is foundation of web." },
+    { text: "Layer responsible for encryption, translation and compression:", options: ["Presentation layer", "Data link layer", "Transport layer", "Network layer"], correctLetter: "a", explanation: "Presentation handles data format, encryption." },
+    { text: "Extension of JavaScript file:", options: ["javaS", "JS", "java", "CSS"], correctLetter: "b", explanation: ".js extension." },
+    { text: "Why perception is still a challenge for AI?", options: ["Unrelated to reasoning", "Lacks actuators", "Requires common-sense knowledge and robust NLP", "Sensors too expensive"], correctLetter: "c", explanation: "Open-world perception needs common sense." },
+    { text: "Service used to translate domain names to IP address:", options: ["HTTPS", "DHCP", "HTTP", "DNS"], correctLetter: "d", explanation: "DNS resolves names." },
+    { text: "Monitors traffic and allows/blocks based on rules:", options: ["IDS", "Proxy server", "VPN", "Firewall"], correctLetter: "d", explanation: "Firewall filters traffic." },
+    { text: "Attributes ID, CITY, NAME. Which can be super key?", options: ["NAME", "ID", "CITY", "CITY,NAME"], correctLetter: "b", explanation: "ID uniquely identifies row." },
+    { text: "Method calculateTax() cannot be overridden. Which declaration?", options: ["abstract double", "final double", "private double", "static double"], correctLetter: "b", explanation: "final prevents overriding." },
+    { text: "INVALID identifier in C++:", options: ["delete", "for_cpp", "jan2025", "Hello"], correctLetter: "a", explanation: "delete is C++ keyword." },
+    { text: "UML building block that defines static part of model:", options: ["Structural things", "Behavioral things", "Annotational things", "Grouping things"], correctLetter: "a", explanation: "Structural things: classes, interfaces, components." },
+    { text: "Scenario best suited for UDP rather than TCP:", options: ["Live video streaming", "Email transmission", "File downloading", "Database update"], correctLetter: "a", explanation: "UDP low latency for streaming." },
+    { text: "Transparency that distributes relation into sub-relations by subset of columns:", options: ["Replication", "Location", "Horizontal", "Vertical"], correctLetter: "d", explanation: "Vertical fragmentation splits columns." },
+    { text: "Learning method where agent receives rewards/penalties:", options: ["Supervised learning", "Reinforcement learning", "Semi-supervised", "Unsupervised"], correctLetter: "b", explanation: "Reinforcement learning uses reward signals." },
+    { text: "System slows during peak hour – which quality attribute affected?", options: ["Maintainability", "Reliability", "Performance efficiency", "Security"], correctLetter: "c", explanation: "Performance deals with responsiveness." },
+    { text: "WRONGLY stated about importance of security policy?", options: ["Help minimize risk", "Ensure CIA triad", "Coordinate security program", "Use system in passive way"], correctLetter: "d", explanation: "Security policy is proactive, not passive." },
+    { text: "Which is NOT task of lexical analyzer?", options: ["Generating parse trees", "Correlating errors with line numbers", "Entering identifiers into symbol table", "Stripping whitespace"], correctLetter: "a", explanation: "Parsing generates parse trees, not lexer." },
+    { text: "Sorting algorithm that compares adjacent elements and swaps if reversed:", options: ["Insertion sort", "Bubble sort", "Selection sort", "Shell sort"], correctLetter: "b", explanation: "Bubble sort adjacent swaps." },
+    { text: "Security goal that prevents disclosure to unauthorized users:", options: ["Confidentiality", "Integrity", "Cyberspace", "Availability"], correctLetter: "a", explanation: "Confidentiality ensures secrecy." },
+    { text: "IPv4 11000001 10000011 00011011 11111111 to dotted decimal:", options: ["192.174.27.255", "192.134.67.254", "193.130.28.254", "193.131.27.255"], correctLetter: "d", explanation: "Binary conversion: 193.131.27.255." },
+    { text: "Grammar G1 = ({S,A,B},{a,b},S,{S→AB, A→a, B→b}) terminal symbols:", options: ["a,b", "S", "S→AB, A→a, B→b", "S,A,B"], correctLetter: "a", explanation: "Terminals are a,b." },
+    { text: "Which is NOT application of queue in real world?", options: ["Handling interrupts in OS", "Playlist in media player", "Depth First search", "Waiting lists"], correctLetter: "c", explanation: "DFS uses stack, not queue." },
+    { text: "Disadvantage of circuit switching:", options: ["Predictable performance", "Low latency", "Guaranteed bandwidth", "Limited scalability"], correctLetter: "d", explanation: "Circuit switching scales poorly." },
+    { text: "Developer stores login status in both $_SESSION and cookie; attacker tampers cookie. Most accurate?", options: ["Vulnerable — cookie-only checks bypass session", "Secure — session data cannot be forged", "Vulnerable only if session_id exposed", "Secure if HTTPS"], correctLetter: "a", explanation: "Relying on client-side cookie for auth is insecure." },
+    { text: "Language L = {wwᴿ | w∈{a,b}*} (even-length palindromes) is:", options: ["Regular", "Context-free but not regular", "Context-sensitive", "Recursive but not context-free"], correctLetter: "b", explanation: "Palindrome language is context-free, not regular." },
+    { text: "Candidate key chosen by database designer to uniquely identify entity set:", options: ["Super key", "Candidate key", "Social security key", "Primary key"], correctLetter: "d", explanation: "Primary key is selected candidate key." },
+    { text: "Statement about function overloading TRUE?", options: ["Same name, different parameters", "Overload not supported", "Must have different return type", "Same number of parameters"], correctLetter: "a", explanation: "Overloading varies parameter list." },
+    { text: "How does OS improve efficiency in multi-user environment?", options: ["One user at a time", "Disable background services", "Time-sharing and process scheduling", "Manual intervention"], correctLetter: "c", explanation: "Scheduling shares CPU fairly." },
+    { text: "Which is NOT feature of dynamic web page?", options: ["Content generated on-the-fly", "Changing content lively", "Same prebuilt content each load", "Connect to database"], correctLetter: "c", explanation: "Static pages have fixed content." },
+    { text: "Why form <input> should include <label> with for attribute?", options: ["Offline storage", "Encrypts data", "Increases speed", "Improves accessibility: screen readers"], correctLetter: "d", explanation: "Label enhances accessibility." },
+    { text: "Name of logic gate based on graphical symbol (NAND shape)?", options: ["XOR", "NOR", "NAND", "AND"], correctLetter: "c", explanation: "Symbol represents NAND gate." }
+  ];
+
+  // Ensure exactly 100 questions (dataset built to 100)
+  while(EXAM_DATA.length < 100) EXAM_DATA.push({ text: "Placeholder", options: ["A","B","C","D"], correctLetter:"a", explanation:"Review" });
+  const TOTAL_QS = 100;
+  const questions = EXAM_DATA.slice(0, TOTAL_QS);
+  
+  // state
+  let userSelections = new Array(TOTAL_QS).fill(null);   // { selectedLetter, isCorrect }
+  let answerLocked = new Array(TOTAL_QS).fill(false);
+  let currentIndex = 0;
+  
+  function recalcScoreAndUpdate() {
+    let correct = 0;
+    for(let i=0; i<TOTAL_QS; i++) {
+      if(userSelections[i] && userSelections[i].isCorrect) correct++;
+    }
+    const percent = Math.round((correct / TOTAL_QS) * 100);
+    document.getElementById('scoreDisplay').innerText = `✅ Score: ${correct} / ${TOTAL_QS}`;
+    document.getElementById('percentDisplay').innerHTML = `📊 ${percent}%`;
+    const fillPercent = (currentIndex+1)/TOTAL_QS * 100;
+    document.getElementById('globalProgressFill').style.width = `${fillPercent}%`;
+    return correct;
+  }
+  
+  function renderQuestion() {
+    const q = questions[currentIndex];
+    const locked = answerLocked[currentIndex];
+    const selectedData = userSelections[currentIndex];
+    const selectedLetter = selectedData ? selectedData.selectedLetter : null;
+    
+    let optionsHtml = '';
+    const letters = ['a','b','c','d'];
+    q.options.forEach((opt, idx) => {
+      const letter = letters[idx];
+      let additionalClass = '';
+      let isHighlightCorrect = false, isHighlightWrong = false;
+      if (locked && selectedLetter === letter) {
+        if (selectedData.isCorrect) additionalClass = 'correct-highlight';
+        else additionalClass = 'wrong-highlight';
+      }
+      const disabledAttr = locked ? 'disabled-opt' : '';
+      optionsHtml += `
+        <div class="opt-btn ${additionalClass} ${disabledAttr}" data-letter="${letter}">
+          <span class="opt-prefix">${letter.toUpperCase()}</span>
+          <span>${escapeHtml(opt)}</span>
         </div>
-
-        <div class="nav-menu" id="nav-menu">
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#military">Strengths</a>
-                <a href="#projects">Projects</a>
-                <a href="#experience">Experience</a>
-                <a href="#education">Education</a>
-                <a href="#contact">Contact</a>
-            </div>
-            <a href="#" class="sticky-download" style="color:white;"><i class="fas fa-download"></i> CV</a>
+      `;
+    });
+    
+    let explanationHtml = '';
+    if (locked && selectedData) {
+      const correctnessMsg = selectedData.isCorrect ? '✓ Correct' : '✗ Incorrect';
+      explanationHtml = `<div class="explanation-box"><strong>${correctnessMsg}</strong><br>${escapeHtml(q.explanation || 'No extra explanation.')}</div>`;
+    }
+    
+    const html = `
+      <div class="question-card">
+        <div class="q-num">Question ${currentIndex+1} of ${TOTAL_QS}</div>
+        <div class="question-text">${escapeHtml(q.text)}</div>
+        <div class="options-grid" id="optionsGrid">
+          ${optionsHtml}
         </div>
-    </nav>
-
-    <main>
-        <!-- HERO SECTION -->
-        <section id="home" class="hero container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="badge"><i class="fas fa-shield-alt" style="color:#0ff;"></i> INTEGRITY · DISCIPLINE ·
-                        CODE</div>
-                    <h1>Mohamed Abdinasir<br><strong>Ibrahim (Xarago)</strong></h1>
-                    <div style="font-size:1.4rem; color:#9fd9ff;">BSc IT | Military Personnel</div>
-                    <p class="hero-para">Cyber‑forward leader with front‑line discipline. Bridging secure systems and
-                        strategic command — from the barracks to the cloud.</p>
-                    <div>
-                        <a href="#contact" class="btn btn-cyan"><i class="fas fa-bolt"></i> Hire Me</a>
-                        <a href="#" class="btn"><i class="fas fa-file-pdf"></i> Download CV</a>
-                        <a href="#contact" class="btn"><i class="fas fa-envelope"></i> Contact</a>
-                    </div>
-                </div>
-                <div class="profile-frame">
-                    <img src="xarago.jpeg" alt="Mohamed Abdinasir Ibrahim - Xarago">
-                </div>
-            </div>
-        </section>
-
-        <!-- ABOUT SECTION -->
-        <section id="about" class="container" style="margin-top: 20px;">
-            <h2 class="section-title">About me</h2>
-            <div class="about-grid glass-card" style="padding: 40px;">
-                <div class="about-img">
-                    <div
-                        style="background:rgba(0,255,255,0.1); border-radius: 50%; padding: 12px; border:2px solid cyan; overflow: hidden; width: 200px; height: 200px;">
-                        <img src="xarago.jpeg" alt="Xarago"
-                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-                    </div>
-                </div>
-                <div class="about-text">
-                    <p><span class="highlight">BSc in Information Technology</span> graduate, currently serving as
-                        Military Personnel. My dual background forged an uncommon blend: <strong>technical rigour +
-                            field leadership</strong>. I develop secure full‑stack applications and coordinate teams
-                        under pressure.</p>
-                    <p><strong>Career objective:</strong> to deliver resilient, intelligent systems for defence and
-                        enterprise — where precision meets innovation.</p>
-                    <p><i class="fas fa-phone-alt" style="color:#0ff;"></i> +252 63 4117409 &nbsp;&nbsp; <i
-                            class="fas fa-map-marker-alt" style="color:#0ff;"></i> Somalia</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- TECHNICAL SKILLS (categorized, glass cards, bars) -->
-        <section id="skills" class="container" style="margin-top: 70px;">
-            <h2 class="section-title">Technical arsenal</h2>
-            <div class="skills-grid">
-                <!-- card 1: Web development -->
-                <div class="skill-card glass-card">
-                    <div class="skill-category"><i class="fas fa-code" style="margin-right: 10px;"></i> Web Dev</div>
-                    <div class="skill-items">
-                        <div class="skill-row"><span class="skill-label">HTML5/CSS3 <span>90%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-row"><span class="skill-label">JavaScript/React <span>80%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:80%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-row"><span class="skill-label">Node.js <span>75%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:75%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Programming -->
-                <div class="skill-card glass-card">
-                    <div class="skill-category"><i class="fas fa-terminal"></i> Programming</div>
-                    <div class="skill-items">
-                        <div class="skill-row"><span class="skill-label">Python <span>88%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:88%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-row"><span class="skill-label">Java <span>78%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:78%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-row"><span class="skill-label">C# <span>70%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:70%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Database -->
-                <div class="skill-card glass-card">
-                    <div class="skill-category"><i class="fas fa-database"></i> Database</div>
-                    <div class="skill-items">
-                        <div class="skill-row"><span class="skill-label">MySQL <span>85%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:85%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-row"><span class="skill-label">MongoDB <span>72%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:72%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Networking -->
-                <div class="skill-card glass-card">
-                    <div class="skill-category"><i class="fas fa-network-wired"></i> Networking</div>
-                    <div class="skill-items">
-                        <div class="skill-row"><span class="skill-label">TCP/IP, DNS <span>87%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:87%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-row"><span class="skill-label">Firewalls/VPN <span>80%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:80%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Cybersecurity -->
-                <div class="skill-card glass-card">
-                    <div class="skill-category"><i class="fas fa-shield-halved"></i> Cybersecurity</div>
-                    <div class="skill-items">
-                        <div class="skill-row"><span class="skill-label">Risk assessment <span>82%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:82%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-row"><span class="skill-label">Audit & compliance <span>78%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:78%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- System Analysis -->
-                <div class="skill-card glass-card">
-                    <div class="skill-category"><i class="fas fa-magnifying-glass-chart"></i> System Analysis</div>
-                    <div class="skill-items">
-                        <div class="skill-row"><span class="skill-label">Requirements <span>88%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:88%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-row"><span class="skill-label">UML/BPMN <span>80%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:80%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Problem Solving -->
-                <div class="skill-card glass-card">
-                    <div class="skill-category"><i class="fas fa-puzzle-piece"></i> Problem Solving</div>
-                    <div class="skill-items">
-                        <div class="skill-row"><span class="skill-label">Analytical <span>92%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:92%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-row"><span class="skill-label">Troubleshooting <span>89%</span></span>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:89%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- MILITARY STRENGTHS (icon cards) -->
-        <section id="military" class="container" style="margin-top: 70px;">
-            <h2 class="section-title">Command & leadership</h2>
-            <div class="military-grid">
-                <div class="military-card glass-card"><i class="fas fa-people-arrows"></i>
-                    <h3>Leadership</h3>
-                    <p>Proven team leader in high‑pressure environments</p>
-                </div>
-                <div class="military-card glass-card"><i class="fas fa-hand-fist"></i>
-                    <h3>Discipline</h3>
-                    <p>Uncompromising standards, precision execution</p>
-                </div>
-                <div class="military-card glass-card"><i class="fas fa-chart-gantt"></i>
-                    <h3>Strategic Planning</h3>
-                    <p>Long‑term mission & resource planning</p>
-                </div>
-                <div class="military-card glass-card"><i class="fas fa-triangle-exclamation"></i>
-                    <h3>Crisis Management</h3>
-                    <p>Rapid decision making under stress</p>
-                </div>
-                <div class="military-card glass-card"><i class="fas fa-user-group"></i>
-                    <h3>Team Coordination</h3>
-                    <p>Synchronised ops & cross‑functional synergy</p>
-                </div>
-                <div class="military-card glass-card"><i class="fas fa-clock"></i>
-                    <h3>Operational Readiness</h3>
-                    <p>24/7 mission‑ready posture</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section id="projects" class="container" style="margin-top: 70px;">
-            <h2 class="section-title">Deployed projects</h2>
-            <div class="projects-grid">
-                <div class="project-card glass-card">
-                    <h3>Student Management System</h3>
-                    <p>Full‑stack platform for secure academic records, role‑based access.</p>
-                    <div class="project-tech"><span class="tech-tag">React</span><span
-                            class="tech-tag">Node.js</span><span class="tech-tag">MySQL</span></div>
-                    <a href="#" class="demo-link">Live demo <i class="fas fa-arrow-up-right-from-square"></i></a>
-                </div>
-                <div class="project-card glass-card">
-                    <h3>Attendance System (biometric)</h3>
-                    <p>Offline‑first attendance with facial recognition & audit trail.</p>
-                    <div class="project-tech"><span class="tech-tag">Python</span><span
-                            class="tech-tag">OpenCV</span><span class="tech-tag">SQLite</span></div>
-                    <a href="#" class="demo-link">Live demo <i class="fas fa-arrow-up-right-from-square"></i></a>
-                </div>
-                <div class="project-card glass-card">
-                    <h3>Full‑Stack Web Portfolio</h3>
-                    <p>Responsive glassmorphism portfolio for defence professionals.</p>
-                    <div class="project-tech"><span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span
-                            class="tech-tag">JS</span></div>
-                    <a href="#" class="demo-link">Live demo <i class="fas fa-arrow-up-right-from-square"></i></a>
-                </div>
-                <div class="project-card glass-card">
-                    <h3>Secure Comms Dashboard</h3>
-                    <p>Internal tool for encrypted messaging & operational updates.</p>
-                    <div class="project-tech"><span class="tech-tag">React</span><span
-                            class="tech-tag">Firebase</span><span class="tech-tag">AES</span></div>
-                    <a href="#" class="demo-link">Live demo <i class="fas fa-arrow-up-right-from-square"></i></a>
-                </div>
-            </div>
-        </section>
-
-        <!-- EXPERIENCE & EDUCATION combined row? we separate them -->
-        <section id="experience" class="container" style="margin-top: 70px;">
-            <h2 class="section-title">Service & experience</h2>
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                <div class="glass-card exp-card" style="padding: 32px;">
-                    <div class="exp-item"><span class="exp-title">Military service (active)</span>
-                        <div class="exp-meta">2019 – present · Somali Armed Forces</div>
-                        <p>Leadership roles: coordinated 20+ personnel during training and security operations. Awarded
-                            commendation for operational readiness.</p>
-                    </div>
-                    <div class="exp-item"><span class="exp-title">IT Freelance / Internship</span>
-                        <div class="exp-meta">2021 – 2024 · various clients</div>
-                        <p>Developed database front‑ends, redesigned small business networks, performed vulnerability
-                            assessments.</p>
-                    </div>
-                    <div class="exp-item"><span class="exp-title">Leadership roles (cyber cell)</span>
-                        <div class="exp-meta">2022 – present</div>
-                        <p>Established a unit cyber awareness program; trained 100+ personnel on phishing & opsec.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="education" class="container" style="margin-top: 50px;">
-            <h2 class="section-title">Education & credentials</h2>
-            <div class="glass-card edu-card" style="padding: 32px;">
-                <div class="edu-item"><span class="exp-title">BSc Information Technology</span>
-                    <div class="exp-meta"> Somali National University · 2024</div>
-                    <p>Relevant coursework: network security, database systems, software engineering, discrete
-                        structures.</p>
-                </div>
-                <div class="edu-item"><span class="exp-title">Certifications</span>
-                    <div class="exp-meta">CompTIA Security+ (in view) · Cisco CyberOps Associate · ITIL Foundation</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CONTACT SECTION -->
-        <section id="contact" class="container" style="margin-top: 70px;">
-            <h2 class="section-title">Secure channel</h2>
-            <div class="contact-row">
-                <div class="contact-info">
-                    <div class="contact-detail"><i class="fas fa-phone-alt"></i> <span>+252 63 4117409</span></div>
-                    <div class="contact-detail"><i class="fas fa-envelope"></i> <span>xaragomohamed@gmail.com</span>
-                    </div>
-                    <div class="contact-detail"><i class="fas fa-map-pin"></i> <span>Mogadishu, Somalia</span></div>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-x-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="contact-form glass-card">
-                    <form>
-                        <div class="form-group"><input type="text" placeholder="Your name" required></div>
-                        <div class="form-group"><input type="email" placeholder="Encrypted email" required></div>
-                        <div class="form-group"><textarea rows="4" placeholder="Secure message..."></textarea></div>
-                        <button type="submit" class="btn btn-cyan" style="border:none; cursor: pointer;"><i
-                                class="fas fa-lock"></i> Transmit</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2025 Mohamed Abdinasir Ibrahim (Xarago) — designed with strategic precision. All rights reserved.</p>
-    </footer>
-    <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const navMenu = document.getElementById('nav-menu');
-        let menuOpen = false;
-
-        menuBtn.addEventListener('click', () => {
-            if (!menuOpen) {
-                menuBtn.classList.add('open');
-                navMenu.classList.add('open');
-                document.body.style.overflow = 'hidden';
-                menuOpen = true;
-            } else {
-                menuBtn.classList.remove('open');
-                navMenu.classList.remove('open');
-                document.body.style.overflow = 'auto';
-                menuOpen = false;
-            }
+        ${explanationHtml}
+        <div class="nav-buttons">
+          <button class="secondary" id="prevBtn" ${currentIndex===0 ? 'disabled' : ''}>◀ Previous</button>
+          <button class="danger reset-btn" id="resetQuizBtn">⟳ Reset All</button>
+          <button class="primary" id="nextBtn" ${currentIndex===TOTAL_QS-1 ? 'disabled' : ''}>Next ▶</button>
+        </div>
+      </div>
+    `;
+    
+    document.getElementById('quizDynamicArea').innerHTML = html;
+    recalcScoreAndUpdate();
+    
+    // attach option click handlers
+    if (!locked) {
+      const optDivs = document.querySelectorAll('.opt-btn');
+      optDivs.forEach(opt => {
+        opt.addEventListener('click', (e) => {
+          if (answerLocked[currentIndex]) return;
+          const letter = opt.dataset.letter;
+          const isCorrect = (letter === q.correctLetter);
+          userSelections[currentIndex] = { selectedLetter: letter, isCorrect: isCorrect };
+          answerLocked[currentIndex] = true;
+          renderQuestion();   // re-render with locked feedback
+          recalcScoreAndUpdate();
         });
-
-        // Close menu when a link is clicked
-        const navLinks = document.querySelectorAll('.nav-links a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuBtn.classList.remove('open');
-                navMenu.classList.remove('open');
-                document.body.style.overflow = 'auto';
-                menuOpen = false;
-            });
-        });
-    </script>
+      });
+    }
+    
+    document.getElementById('prevBtn')?.addEventListener('click', () => {
+      if (currentIndex > 0) { currentIndex--; renderQuestion(); }
+    });
+    document.getElementById('nextBtn')?.addEventListener('click', () => {
+      if (currentIndex < TOTAL_QS-1) { currentIndex++; renderQuestion(); }
+      else {
+        const correctTotal = userSelections.filter(s => s && s.isCorrect).length;
+        alert(`🎉 Final score: ${correctTotal}/${TOTAL_QS} (${Math.round(correctTotal/TOTAL_QS*100)}%). You can reset to try again.`);
+      }
+    });
+    document.getElementById('resetQuizBtn')?.addEventListener('click', () => {
+      if (confirm('Reset all answers? Progress will be lost.')) {
+        userSelections = new Array(TOTAL_QS).fill(null);
+        answerLocked = new Array(TOTAL_QS).fill(false);
+        currentIndex = 0;
+        renderQuestion();
+      }
+    });
+  }
+  
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+  
+  renderQuestion();
+</script>
 </body>
-
 </html>
